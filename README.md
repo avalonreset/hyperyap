@@ -17,7 +17,7 @@ Download the latest [release](https://github.com/Kieirra/murmure/releases) and f
 
 Note:
 
-- The Windows build is self-signed, as I'’'m not paying certification authorities just to remove the SmartScreen warning. Because of that, Windows may show a security message when you install it. The installer is safe, it will simply build its reputation over time as more users run it, and the warning will gradually disappear.
+- The Windows build is self-signed, as I'm not paying certification authorities just to remove the SmartScreen warning. Because of that, Windows may show a security message when you install it. The installer is safe, it will simply build its reputation over time as more users run it, and the warning will gradually disappear.
 - The experimental Linux AppImage currently runs slower during transcription. Performance improvements are in progress, stay tuned for updates!
 
 ## Usage
@@ -39,12 +39,12 @@ Murmure uses NVIDIA’s Parakeet TDT, a highly optimized, experimental transform
 
 ## Changelog
 
-| Version       | Date       | Notes                                                                                          |
-| ------------- | ---------- | ---------------------------------------------------------------------------------------------- |
-| `1.2.1`       | 2025-10-13 | Fix overlay position + check for updates button + Autosigned msi + Linux experimental AppImage |
-| `1.2.0-alpha` | 2025-10-13 | Add Overlay                                                                                    |
-| `1.1.0-alpha` | 2025-10-13 | Add 'Past last transcript' shortcut                                                            |
-| `1.0.0-alpha` | 2025-10-13 | Initial version                                                                                |
+| Version       | Date       | Notes                                                                                      |
+| ------------- | ---------- | ------------------------------------------------------------------------------------------ |
+| `1.2.1`       | 2025-10-17 | Fix overlay position + check for updates button + signed msi + Linux experimental AppImage |
+| `1.2.0-alpha` | 2025-10-14 | Add Overlay                                                                                |
+| `1.1.0-alpha` | 2025-10-13 | Add 'Past last transcript' shortcut                                                        |
+| `1.0.0-alpha` | 2025-10-13 | Initial version                                                                            |
 
 ## Acknowledgments
 
