@@ -39,7 +39,7 @@ export const System = () => {
                                 </Typography.Title>
                                 <Typography.Paragraph>
                                     If enabled, Murmure will start automatically
-                                    when Windows starts.
+                                    when your system starts.
                                 </Typography.Paragraph>
                             </SettingsUI.Description>
                             <Switch

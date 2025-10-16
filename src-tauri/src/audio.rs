@@ -3,7 +3,6 @@ use crate::engine::{
     engine::ParakeetEngine, engine::ParakeetModelParams, transcription_engine::TranscriptionEngine,
 };
 use crate::history;
-#[cfg(target_os = "windows")]
 use crate::overlay;
 use crate::model::Model;
 use anyhow::{Context, Result};
@@ -73,12 +72,9 @@ pub fn record_audio(app: &tauri::AppHandle) {
     *STREAM.lock().unwrap() = Some(stream);
 
     println!("Recording started");
-    #[cfg(target_os = "windows")]
-    {
-        let s = crate::settings::load_settings(app);
-        if s.overlay_mode.as_str() == "recording" {
-            overlay::show_recording_overlay(app);
-        }
+    let s = crate::settings::load_settings(app);
+    if s.overlay_mode.as_str() == "recording" {
+        overlay::show_recording_overlay(app);
     }
 }
 
@@ -134,12 +130,9 @@ pub fn stop_recording(app: &tauri::AppHandle) -> Option<std::path::PathBuf> {
         }
         // Emit a final zero level to let frontend reset visualizer
         let _ = app.emit("mic-level", 0.0f32);
-        #[cfg(target_os = "windows")]
-        {
-            let s = crate::settings::load_settings(app);
-            if s.overlay_mode.as_str() == "recording" {
-                overlay::hide_recording_overlay(app);
-            }
+        let s = crate::settings::load_settings(app);
+        if s.overlay_mode.as_str() == "recording" {
+            overlay::hide_recording_overlay(app);
         }
         return path;
     } else {

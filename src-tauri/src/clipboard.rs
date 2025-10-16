@@ -2,6 +2,42 @@ use enigo::{Enigo, Key, Keyboard, Settings};
 use tauri::AppHandle;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 
+pub fn paste(text: String, app_handle: AppHandle) -> Result<(), String> {
+    #[cfg(target_os = "linux")]
+    {
+        if try_type_text_linux(&text).is_ok() {
+            return Ok(());
+        }
+    }
+
+    let clipboard = app_handle.clipboard();
+    let clipboard_content = clipboard.read_text().unwrap_or_default();
+    clipboard
+        .write_text(&text)
+        .map_err(|e| format!("Failed to write to clipboard: {}", e))?;
+
+    std::thread::sleep(std::time::Duration::from_millis(50));
+
+    send_paste()?;
+
+    std::thread::sleep(std::time::Duration::from_millis(100));
+
+    clipboard
+        .write_text(&clipboard_content)
+        .map_err(|e| format!("Failed to restore clipboard: {}", e))?;
+
+    Ok(())
+}
+
+#[cfg(target_os = "linux")]
+fn try_type_text_linux(text: &str) -> Result<(), String> {
+    let mut enigo = Enigo::new(&Settings::default())
+        .map_err(|e| format!("Failed to initialize Enigo: {}", e))?;
+    enigo
+        .text(text)
+        .map_err(|e| format!("Failed to type text: {}", e))
+}
+
 fn send_paste() -> Result<(), String> {
     #[cfg(target_os = "macos")]
     let (modifier_key, v_key_code) = (Key::Meta, Key::Other(9));
@@ -34,37 +70,6 @@ fn send_paste() -> Result<(), String> {
     enigo
         .key(modifier_key, enigo::Direction::Release)
         .map_err(|e| format!("Failed to release modifier key: {}", e))?;
-
-    Ok(())
-}
-
-pub fn paste(text: String, app_handle: AppHandle) -> Result<(), String> {
-    let clipboard = app_handle.clipboard();
-
-    let clipboard_content = clipboard.read_text().unwrap_or_default();
-
-    clipboard
-        .write_text(&text)
-        .map_err(|e| format!("Failed to write to clipboard: {}", e))?;
-
-    #[cfg(target_os = "linux")]
-    std::thread::sleep(std::time::Duration::from_millis(200));
-
-    #[cfg(not(target_os = "linux"))]
-    std::thread::sleep(std::time::Duration::from_millis(50));
-
-    send_paste()?;
-
-    // Warning: Paste take a lot of time in linux
-    #[cfg(target_os = "linux")]
-    std::thread::sleep(std::time::Duration::from_millis(1000));
-
-    #[cfg(not(target_os = "linux"))]
-    std::thread::sleep(std::time::Duration::from_millis(100));
-
-    clipboard
-        .write_text(&clipboard_content)
-        .map_err(|e| format!("Failed to restore clipboard: {}", e))?;
 
     Ok(())
 }

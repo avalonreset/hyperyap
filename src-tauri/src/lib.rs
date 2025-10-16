@@ -60,13 +60,10 @@ pub fn run() {
 
             setup_tray(&app.handle())?;
 
-            #[cfg(target_os = "windows")]
-            {
-                overlay::create_recording_overlay(&app.handle());
-                if s.overlay_mode.as_str() == "always" {
-                    if let Some(overlay_window) = app.get_webview_window("recording_overlay") {
-                        let _ = overlay_window.show();
-                    }
+            overlay::create_recording_overlay(&app.handle());
+            if s.overlay_mode.as_str() == "always" {
+                if let Some(overlay_window) = app.get_webview_window("recording_overlay") {
+                    let _ = overlay_window.show();
                 }
             }
 
@@ -95,6 +92,10 @@ pub fn run() {
             get_dictionary,
             get_last_transcript_shortcut,
             set_last_transcript_shortcut,
+            get_overlay_mode,
+            set_overlay_mode,
+            get_overlay_position,
+            set_overlay_position,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
