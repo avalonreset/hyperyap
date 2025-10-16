@@ -46,15 +46,6 @@ Murmure uses NVIDIA’s Parakeet TDT, a highly optimized, experimental transform
 
 - Thanks to NVIDIA for the Parakeet TDT model, Tauri for being an amazing tool, and to the open‑source community for their tools and libraries.
 
-### Maintainer
-
-- Kieirra
-- Al1x-ai
-
-### Contributors
-
-- Nicolas Crop
-
 ## License
 
 Murmure is free and open source, released under the GNU GPL v3 License.
