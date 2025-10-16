@@ -1,5 +1,5 @@
 import { Switch } from '../../../components/switch';
-import { AlertCircle, Eye, Power, Ruler } from 'lucide-react';
+import { Eye, Power, Ruler } from 'lucide-react';
 import { Typography } from '@/components/typography';
 import { SettingsUI } from '@/components/settings-ui';
 import { useStartOnBootState } from './hooks/use-auto-start-state';
@@ -15,13 +15,8 @@ import { useOverlayState } from './hooks/use-overlay-state';
 
 export const System = () => {
     const { startOnBoot, setStartOnBoot } = useStartOnBootState();
-    const {
-        overlayMode,
-        setOverlayMode,
-        overlayPosition,
-        setOverlayPosition,
-        disableOverlaySettings,
-    } = useOverlayState();
+    const { overlayMode, setOverlayMode, overlayPosition, setOverlayPosition } =
+        useOverlayState();
 
     return (
         <main>
@@ -52,83 +47,69 @@ export const System = () => {
                                 onCheckedChange={setStartOnBoot}
                             />
                         </SettingsUI.Item>
-
                         <SettingsUI.Separator />
-                        {disableOverlaySettings && (
-                            <span className="flex items-center gap-2 text-zinc-400 px-4 pt-4 text-sm">
-                                <AlertCircle className="w-4 h-4 text-zinc-400" />
-                                Overlay is not available on Linux yet
-                            </span>
-                        )}
-                        <div
-                            className={`${disableOverlaySettings ? 'pointer-events-none opacity-30' : ''}`}
-                        >
-                            <SettingsUI.Item>
-                                <SettingsUI.Description>
-                                    <Typography.Title className="flex items-center gap-2">
-                                        <Eye className="w-4 h-4 text-zinc-400" />
-                                        Overlay visibility
-                                    </Typography.Title>
-                                    <Typography.Paragraph>
-                                        Choose when to show the recording
-                                        overlay.
-                                    </Typography.Paragraph>
-                                </SettingsUI.Description>
+                        <SettingsUI.Item>
+                            <SettingsUI.Description>
+                                <Typography.Title className="flex items-center gap-2">
+                                    <Eye className="w-4 h-4 text-zinc-400" />
+                                    Overlay visibility
+                                </Typography.Title>
+                                <Typography.Paragraph>
+                                    Choose when to show the recording overlay.
+                                </Typography.Paragraph>
+                            </SettingsUI.Description>
 
-                                <div className="flex gap-2">
-                                    <Select
-                                        value={overlayMode}
-                                        onValueChange={setOverlayMode}
-                                    >
-                                        <SelectTrigger className="w-[150px]">
-                                            <SelectValue placeholder="Select a mode" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="hidden">
-                                                Hidden
-                                            </SelectItem>
-                                            <SelectItem value="recording">
-                                                While recording
-                                            </SelectItem>
-                                            <SelectItem value="always">
-                                                Always
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            </SettingsUI.Item>
-                            <SettingsUI.Separator />
-                            <SettingsUI.Item>
-                                <SettingsUI.Description>
-                                    <Typography.Title className="flex items-center gap-2">
-                                        <Ruler className="w-4 h-4 text-zinc-400" />
-                                        Overlay position
-                                    </Typography.Title>
-                                    <Typography.Paragraph>
-                                        Choose whether the overlay appears at
-                                        the top or bottom.
-                                    </Typography.Paragraph>
-                                </SettingsUI.Description>
-                                <div className="flex gap-2">
-                                    <Select
-                                        value={overlayPosition}
-                                        onValueChange={setOverlayPosition}
-                                    >
-                                        <SelectTrigger className="w-[150px]">
-                                            <SelectValue placeholder="Select a position" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="top">
-                                                Top
-                                            </SelectItem>
-                                            <SelectItem value="bottom">
-                                                Bottom
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            </SettingsUI.Item>
-                        </div>
+                            <div className="flex gap-2">
+                                <Select
+                                    value={overlayMode}
+                                    onValueChange={setOverlayMode}
+                                >
+                                    <SelectTrigger className="w-[150px]">
+                                        <SelectValue placeholder="Select a mode" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="hidden">
+                                            Hidden
+                                        </SelectItem>
+                                        <SelectItem value="recording">
+                                            While recording
+                                        </SelectItem>
+                                        <SelectItem value="always">
+                                            Always
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </SettingsUI.Item>
+                        <SettingsUI.Separator />
+                        <SettingsUI.Item>
+                            <SettingsUI.Description>
+                                <Typography.Title className="flex items-center gap-2">
+                                    <Ruler className="w-4 h-4 text-zinc-400" />
+                                    Overlay position
+                                </Typography.Title>
+                                <Typography.Paragraph>
+                                    Choose whether the overlay appears at the
+                                    top or bottom.
+                                </Typography.Paragraph>
+                            </SettingsUI.Description>
+                            <div className="flex gap-2">
+                                <Select
+                                    value={overlayPosition}
+                                    onValueChange={setOverlayPosition}
+                                >
+                                    <SelectTrigger className="w-[150px]">
+                                        <SelectValue placeholder="Select a position" />
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectItem value="top">Top</SelectItem>
+                                        <SelectItem value="bottom">
+                                            Bottom
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+                        </SettingsUI.Item>
                     </SettingsUI.Container>
                 </div>
             </div>

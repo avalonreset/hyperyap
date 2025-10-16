@@ -8,7 +8,6 @@ export const useOverlayState = () => {
     const [overlayPosition, setOverlayPosition] = useState<'top' | 'bottom'>(
         'bottom'
     );
-    const [disableOverlaySettings, setDisableOverlaySettings] = useState(false);
 
     useEffect(() => {
         invoke<string>('get_overlay_mode').then((m) => {
@@ -19,15 +18,6 @@ export const useOverlayState = () => {
         invoke<string>('get_overlay_position').then((p) => {
             if (p === 'top' || p === 'bottom') setOverlayPosition(p);
         });
-
-        const fetchPlatform = async () => {
-            const platform = await invoke<string>('plugin:os|platform');
-            if (platform === 'linux') {
-                setDisableOverlaySettings(true);
-            }
-        };
-
-        fetchPlatform();
     }, []);
 
     return {
@@ -41,6 +31,5 @@ export const useOverlayState = () => {
         },
         overlayMode,
         overlayPosition,
-        disableOverlaySettings,
     };
 };
