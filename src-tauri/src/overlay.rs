@@ -1,5 +1,5 @@
-use tauri::{AppHandle, Emitter, Manager, WebviewWindowBuilder};
 use crate::settings;
+use tauri::{AppHandle, Emitter, Manager, WebviewWindowBuilder};
 
 const OVERLAY_WIDTH: f64 = 80.0;
 const OVERLAY_HEIGHT: f64 = 18.0;
@@ -108,5 +108,3 @@ pub fn hide_recording_overlay(app_handle: &AppHandle) {
         println!("recording_overlay window not found on hide_recording_overlay");
     }
 }
-
-

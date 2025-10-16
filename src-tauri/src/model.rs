@@ -1,4 +1,3 @@
-
 use anyhow::Result;
 use std::path::PathBuf;
 use tauri::{AppHandle, Manager};
@@ -51,7 +50,10 @@ impl Model {
         let fallback_path = exe_dir.join("resources").join(MODEL_FILENAME);
 
         if fallback_path.exists() {
-            println!("Model found at fallback location: {}", fallback_path.display());
+            println!(
+                "Model found at fallback location: {}",
+                fallback_path.display()
+            );
             return Ok(fallback_path);
         }
 

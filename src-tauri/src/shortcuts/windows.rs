@@ -1,16 +1,15 @@
+use crate::audio::write_transcription;
 use crate::audio::{record_audio, stop_recording};
 use crate::history::get_last_transcription;
-use crate::audio::write_transcription;
-use crate::shortcuts::{RecordShortcutKeys, LastTranscriptShortcutKeys, keys_to_string};
+use crate::shortcuts::{keys_to_string, LastTranscriptShortcutKeys, RecordShortcutKeys};
 use std::time::Duration;
 use tauri::{AppHandle, Emitter, Manager};
 
 use windows_sys::Win32::UI::Input::KeyboardAndMouse::GetAsyncKeyState;
 
 fn check_keys_pressed(keys: &[i32]) -> bool {
-    keys.iter().all(|&vk| {
-        (unsafe { GetAsyncKeyState(vk) } as u16 & 0x8000) != 0
-    })
+    keys.iter()
+        .all(|&vk| (unsafe { GetAsyncKeyState(vk) } as u16 & 0x8000) != 0)
 }
 
 pub fn init_shortcuts(app: AppHandle) {
@@ -21,7 +20,8 @@ pub fn init_shortcuts(app: AppHandle) {
 
         loop {
             let record_required_keys = app_handle.state::<RecordShortcutKeys>().get();
-            let last_transcript_required_keys = app_handle.state::<LastTranscriptShortcutKeys>().get();
+            let last_transcript_required_keys =
+                app_handle.state::<LastTranscriptShortcutKeys>().get();
 
             if record_required_keys.is_empty() {
                 std::thread::sleep(Duration::from_millis(32));
@@ -56,5 +56,3 @@ pub fn init_shortcuts(app: AppHandle) {
         }
     });
 }
-
-

@@ -1,7 +1,6 @@
 import {
     Home,
     Settings,
-    RefreshCw,
     Info,
     ChevronRight,
     Keyboard,
@@ -25,6 +24,7 @@ import {
 } from '../../../components/sidebar';
 import { useLocation } from '@tanstack/react-router';
 import { useGetVersion } from '../hooks/use-get-version';
+import { UpdateChecker } from '../../update-checker/update-checker';
 
 const settingsSubItems = [
     { name: 'Shortcuts', url: '/settings/shortcuts', icon: Keyboard },
@@ -109,13 +109,7 @@ export const AppSidebar = () => {
             </SidebarContent>
             <SidebarFooter className="bg-zinc-900 border-t border-zinc-700 p-4">
                 <div className="flex items-center gap-2 justify-center">
-                    <button
-                        onClick={() => console.log('Check for updates')}
-                        className="text-xs text-zinc-500 hover:text-zinc-300 transition-colors flex items-center gap-1.5 px-2 py-1 rounded hover:bg-zinc-800 cursor-pointer"
-                    >
-                        <RefreshCw className="w-3 h-3" />
-                        <span>Check for updates</span>
-                    </button>
+                    <UpdateChecker />
                     <p className="text-xs text-zinc-500">{version}</p>
                 </div>
             </SidebarFooter>

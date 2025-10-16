@@ -2,7 +2,9 @@ use crate::dictionary::Dictionary;
 use crate::history::{self, HistoryEntry};
 use crate::model::Model;
 use crate::settings;
-use crate::shortcuts::{keys_to_string, parse_binding_keys, RecordShortcutKeys, LastTranscriptShortcutKeys};
+use crate::shortcuts::{
+    keys_to_string, parse_binding_keys, LastTranscriptShortcutKeys, RecordShortcutKeys,
+};
 use std::sync::Arc;
 use tauri::{AppHandle, Manager, State};
 

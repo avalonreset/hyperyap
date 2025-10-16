@@ -1,9 +1,9 @@
-use crate::audio::{record_audio, stop_recording};
 use crate::audio::write_transcription;
+use crate::audio::{record_audio, stop_recording};
 use crate::history::get_last_transcription;
-use crate::shortcuts::{RecordShortcutKeys, LastTranscriptShortcutKeys, keys_to_string};
-use rdev::{listen, Event, EventType, Key};
+use crate::shortcuts::{keys_to_string, LastTranscriptShortcutKeys, RecordShortcutKeys};
 use parking_lot::RwLock;
+use rdev::{listen, Event, EventType, Key};
 use std::collections::HashSet;
 use std::sync::Arc;
 use std::time::Duration;
@@ -88,20 +88,18 @@ pub fn init_shortcuts(app: AppHandle) {
     let pressed_keys_checker = pressed_keys.clone();
 
     std::thread::spawn(move || {
-        if let Err(error) = listen(move |event: Event| {
-            match event.event_type {
-                EventType::KeyPress(key) => {
-                    if let Some(vk) = rdev_key_to_vk(&key) {
-                        pressed_keys_listener.write().insert(vk);
-                    }
+        if let Err(error) = listen(move |event: Event| match event.event_type {
+            EventType::KeyPress(key) => {
+                if let Some(vk) = rdev_key_to_vk(&key) {
+                    pressed_keys_listener.write().insert(vk);
                 }
-                EventType::KeyRelease(key) => {
-                    if let Some(vk) = rdev_key_to_vk(&key) {
-                        pressed_keys_listener.write().remove(&vk);
-                    }
-                }
-                _ => {}
             }
+            EventType::KeyRelease(key) => {
+                if let Some(vk) = rdev_key_to_vk(&key) {
+                    pressed_keys_listener.write().remove(&vk);
+                }
+            }
+            _ => {}
         }) {
             eprintln!("Error starting keyboard listener: {:?}", error);
         }
@@ -114,7 +112,8 @@ pub fn init_shortcuts(app: AppHandle) {
 
         loop {
             let record_required_keys = app_handle.state::<RecordShortcutKeys>().get();
-            let last_transcript_required_keys = app_handle.state::<LastTranscriptShortcutKeys>().get();
+            let last_transcript_required_keys =
+                app_handle.state::<LastTranscriptShortcutKeys>().get();
 
             if record_required_keys.is_empty() {
                 std::thread::sleep(Duration::from_millis(32));
@@ -124,7 +123,9 @@ pub fn init_shortcuts(app: AppHandle) {
             let pressed = pressed_keys_checker.read();
             let all_record_keys_down = record_required_keys.iter().all(|k| pressed.contains(k));
             let all_last_transcript_keys_down = !last_transcript_required_keys.is_empty()
-                && last_transcript_required_keys.iter().all(|k| pressed.contains(k));
+                && last_transcript_required_keys
+                    .iter()
+                    .all(|k| pressed.contains(k));
 
             if !is_recording && all_record_keys_down {
                 record_audio(&app_handle);
@@ -151,5 +152,3 @@ pub fn init_shortcuts(app: AppHandle) {
         }
     });
 }
-
-

@@ -1,5 +1,8 @@
-use std::{path::PathBuf, sync::{Arc, Mutex}};
 use rphonetic::{BeiderMorseBuilder, ConfigFiles, LanguageSet};
+use std::{
+    path::PathBuf,
+    sync::{Arc, Mutex},
+};
 use tauri::{AppHandle, Manager};
 
 pub struct Dictionary(pub Arc<Mutex<Vec<String>>>);
@@ -19,7 +22,11 @@ impl Dictionary {
 /**
  * Use phonetic algorithm to fix the transcription
  */
-pub fn fix_transcription_with_dictionary(transcription: String, dictionary: Vec<String>, cc_rules_path: PathBuf) -> String {
+pub fn fix_transcription_with_dictionary(
+    transcription: String,
+    dictionary: Vec<String>,
+    cc_rules_path: PathBuf,
+) -> String {
     if dictionary.is_empty() {
         return transcription;
     }
@@ -47,7 +54,10 @@ pub fn fix_transcription_with_dictionary(transcription: String, dictionary: Vec<
         let candidate_codes: Vec<&str> = candidate.split('|').collect();
         for (dict_word, dict_code) in &encoded_dict {
             let dict_codes: Vec<&str> = dict_code.split('|').collect();
-            println!("Dict word: {:?}, Dict code: {:?}, Candidate: {:?}", dict_word, dict_code, candidate);
+            println!(
+                "Dict word: {:?}, Dict code: {:?}, Candidate: {:?}",
+                dict_word, dict_code, candidate
+            );
             if dict_codes.iter().any(|dc| candidate_codes.contains(dc)) {
                 corrected_transcription = corrected_transcription.replace(word, dict_word);
             }
@@ -69,10 +79,9 @@ pub fn get_cc_rules_path(app_handle: &AppHandle) -> anyhow::Result<PathBuf> {
             "_up_/resources/cc-rules/",
             tauri::path::BaseDirectory::Resource,
         ),
-        app_handle.path().resolve(
-            "resources/cc-rules/",
-            tauri::path::BaseDirectory::Resource,
-        ),
+        app_handle
+            .path()
+            .resolve("resources/cc-rules/", tauri::path::BaseDirectory::Resource),
     ];
 
     // Essayer chaque chemin

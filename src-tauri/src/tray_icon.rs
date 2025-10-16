@@ -33,8 +33,7 @@ pub fn setup_tray(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>> {
                     let _ = window.set_focus();
                 }
             }
-        })
-        ;
+        });
 
     #[cfg(target_os = "linux")]
     let builder = builder.show_menu_on_left_click(true).icon_as_template(true);

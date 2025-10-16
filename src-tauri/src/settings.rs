@@ -8,8 +8,8 @@ pub struct AppSettings {
     pub record_shortcut: String,
     pub last_transcript_shortcut: String,
     pub dictionary: Vec<String>,
-    pub overlay_mode: String,       // "hidden" | "recording" | "always"
-    pub overlay_position: String,   // "top" | "bottom"
+    pub overlay_mode: String,     // "hidden" | "recording" | "always"
+    pub overlay_position: String, // "top" | "bottom"
 }
 
 impl Default for AppSettings {

@@ -5,11 +5,10 @@ mod dictionary;
 mod engine;
 mod history;
 mod model;
+mod overlay;
 mod settings;
 mod shortcuts;
 mod tray_icon;
-#[cfg(target_os = "windows")]
-mod overlay;
 
 use audio::preload_engine;
 use commands::*;
@@ -20,7 +19,7 @@ use std::sync::Arc;
 use tauri::{DeviceEventFilter, Manager};
 use tray_icon::setup_tray;
 
-use crate::shortcuts::{RecordShortcutKeys, LastTranscriptShortcutKeys};
+use crate::shortcuts::{LastTranscriptShortcutKeys, RecordShortcutKeys};
 
 fn show_main_window(app: &tauri::AppHandle) {
     if let Some(main_window) = app.get_webview_window("main") {
@@ -38,6 +37,7 @@ fn show_main_window(app: &tauri::AppHandle) {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
             show_main_window(app);
         }))
@@ -100,4 +100,3 @@ pub fn run() {
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
-

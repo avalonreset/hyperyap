@@ -1,10 +1,11 @@
 use crate::clipboard;
+use crate::dictionary::{fix_transcription_with_dictionary, get_cc_rules_path, Dictionary};
 use crate::engine::{
     engine::ParakeetEngine, engine::ParakeetModelParams, transcription_engine::TranscriptionEngine,
 };
 use crate::history;
-use crate::overlay;
 use crate::model::Model;
+use crate::overlay;
 use anyhow::{Context, Result};
 use cpal::traits::{DeviceTrait, HostTrait, StreamTrait};
 use hound::{WavSpec, WavWriter};
@@ -16,7 +17,6 @@ use std::sync::{Arc, Mutex};
 use tauri::AppHandle;
 use tauri::Emitter;
 use tauri::Manager;
-use crate::dictionary::{fix_transcription_with_dictionary, get_cc_rules_path, Dictionary};
 
 type WavWriterType = WavWriter<BufWriter<File>>;
 type RecorderType = Arc<Mutex<Option<WavWriterType>>>;
@@ -107,7 +107,8 @@ pub fn stop_recording(app: &tauri::AppHandle) -> Option<std::path::PathBuf> {
                         println!("Raw transcription: {}", raw_text);
                         let cc_rules_path = get_cc_rules_path(app).unwrap();
                         let dictionary = app.state::<Dictionary>().get();
-                        let text = fix_transcription_with_dictionary(raw_text, dictionary, cc_rules_path);
+                        let text =
+                            fix_transcription_with_dictionary(raw_text, dictionary, cc_rules_path);
                         println!("Transcription fixed with dictionary: {}", text);
                         if let Err(e) = history::add_transcription(app, text.clone()) {
                             eprintln!("Failed to save to history: {}", e);
@@ -141,7 +142,10 @@ pub fn stop_recording(app: &tauri::AppHandle) -> Option<std::path::PathBuf> {
     None
 }
 
-pub fn write_transcription(app: &tauri::AppHandle, transcription: &String) -> Result<(), anyhow::Error> {
+pub fn write_transcription(
+    app: &tauri::AppHandle,
+    transcription: &String,
+) -> Result<(), anyhow::Error> {
     if let Err(e) = clipboard::paste(transcription.clone(), app.clone()) {
         eprintln!("Failed to paste text: {}", e);
     }

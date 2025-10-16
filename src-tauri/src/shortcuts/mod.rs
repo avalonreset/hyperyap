@@ -148,17 +148,18 @@ pub fn parse_binding_keys(binding: &str) -> Vec<i32> {
 }
 
 pub fn keys_to_string(keys: &[i32]) -> String {
-    keys.iter().map(|vk| vk_to_key_name(*vk)).collect::<Vec<_>>().join("+")
+    keys.iter()
+        .map(|vk| vk_to_key_name(*vk))
+        .collect::<Vec<_>>()
+        .join("+")
 }
 
-#[cfg(target_os = "windows")]
-mod windows;
 #[cfg(target_os = "linux")]
 mod linux;
-
 #[cfg(target_os = "windows")]
-pub use windows::init_shortcuts;
+mod windows;
+
 #[cfg(target_os = "linux")]
 pub use linux::init_shortcuts;
-
-
+#[cfg(target_os = "windows")]
+pub use windows::init_shortcuts;
