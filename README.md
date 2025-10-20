@@ -60,13 +60,15 @@ You can inspect, modify, and redistribute it freely as long as derivative works 
 Contributions are welcome!
 If you’d like to improve Murmure or report an issue:
 
-0. Install Visual Studio Build Tools 2022 (Desktop C++ workload)
+Pre-requisite : 
+- (windows) Install Visual Studio Build Tools 2022 (Desktop C++ workload)
+- (linux) Install Vulkan
+- Install git lfs
+
 1. Fork the repository
 2. Create a feature branch (git checkout -b feature/new-feature)
 3. Commit your changes (git commit -m "Add new feature")
 4. Push and open a pull request
-
-Note: for some reason, Rust does not copy resources to the correct location in dev mode; you need to copy the entire `resources` folder into `src-tauri/target/debug/_up_/`
 
 ## Support Development
 
