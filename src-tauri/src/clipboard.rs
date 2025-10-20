@@ -1,18 +1,23 @@
 use enigo::{Enigo, Key, Keyboard, Settings};
-use tauri::AppHandle;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 
-pub fn paste(text: String, app_handle: AppHandle) -> Result<(), String> {
+pub fn paste(text: &str, app_handle: &tauri::AppHandle) -> Result<(), String> {
     let clipboard = app_handle.clipboard();
     let clipboard_content = clipboard.read_text().unwrap_or_default();
     clipboard
-        .write_text(&text)
+        .write_text(text)
         .map_err(|e| format!("Failed to write to clipboard: {}", e))?;
 
+    #[cfg(target_os = "linux")]
+    std::thread::sleep(std::time::Duration::from_millis(100));
+    #[cfg(target_os = "windows")]
     std::thread::sleep(std::time::Duration::from_millis(50));
 
     send_paste()?;
 
+    #[cfg(target_os = "linux")]
+    std::thread::sleep(std::time::Duration::from_millis(200));
+    #[cfg(target_os = "windows")]
     std::thread::sleep(std::time::Duration::from_millis(100));
 
     clipboard
