@@ -3,13 +3,6 @@ use tauri::AppHandle;
 use tauri_plugin_clipboard_manager::ClipboardExt;
 
 pub fn paste(text: String, app_handle: AppHandle) -> Result<(), String> {
-    #[cfg(target_os = "linux")]
-    {
-        if try_type_text_linux(&text).is_ok() {
-            return Ok(());
-        }
-    }
-
     let clipboard = app_handle.clipboard();
     let clipboard_content = clipboard.read_text().unwrap_or_default();
     clipboard
@@ -29,15 +22,6 @@ pub fn paste(text: String, app_handle: AppHandle) -> Result<(), String> {
     Ok(())
 }
 
-#[cfg(target_os = "linux")]
-fn try_type_text_linux(text: &str) -> Result<(), String> {
-    let mut enigo = Enigo::new(&Settings::default())
-        .map_err(|e| format!("Failed to initialize Enigo: {}", e))?;
-    enigo
-        .text(text)
-        .map_err(|e| format!("Failed to type text: {}", e))
-}
-
 fn send_paste() -> Result<(), String> {
     #[cfg(target_os = "macos")]
     let (modifier_key, v_key_code) = (Key::Meta, Key::Other(9));
@@ -53,15 +37,9 @@ fn send_paste() -> Result<(), String> {
         .key(modifier_key, enigo::Direction::Press)
         .map_err(|e| format!("Failed to press modifier key: {}", e))?;
 
-    #[cfg(target_os = "linux")]
-    std::thread::sleep(std::time::Duration::from_millis(50));
-
     enigo
         .key(v_key_code, enigo::Direction::Press)
         .map_err(|e| format!("Failed to press V key: {}", e))?;
-
-    #[cfg(target_os = "linux")]
-    std::thread::sleep(std::time::Duration::from_millis(10));
 
     enigo
         .key(v_key_code, enigo::Direction::Release)
