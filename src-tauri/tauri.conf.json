@@ -33,7 +33,15 @@
             "icons/icon.icns",
             "icons/icon.ico"
         ],
-        "resources": ["../resources/**/*"]
+        "resources": ["../resources/**/*"],
+        "linux": {
+            "appimage": {
+                "files": {
+                    "/usr/share/README.md": "../README.md",
+                    "/usr/resources": "../resources/"
+                }
+            }
+        }
     },
     "plugins": {
         "updater": {
