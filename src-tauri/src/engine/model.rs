@@ -117,7 +117,8 @@ impl ParakeetModel {
         let mut builder = Session::builder()?
             .with_optimization_level(GraphOptimizationLevel::Level3)?
             .with_execution_providers(providers)?
-            .with_parallel_execution(true)?;
+            .with_memory_pattern(false)?
+            .with_parallel_execution(false)?;
 
         if let Some(threads) = intra_threads {
             builder = builder
