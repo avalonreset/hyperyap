@@ -9,7 +9,13 @@ export const History = ({}: HistoryProps) => {
 
     return (
         <div className="space-y-2 w-full">
-            <Typography.Title>Recent activity</Typography.Title>
+            <Typography.Title>
+                Recent activity{' '}
+                <span className="text-[10px] text-zinc-400">
+                    (Only the last 5 transcriptions are kept; older text and
+                    audio files are deleted)
+                </span>
+            </Typography.Title>
             {history.length === 0 ? (
                 <Typography.Paragraph>
                     No transcriptions yet
