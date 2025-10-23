@@ -1,4 +1,3 @@
-import { Kbd } from '@/components/kbd';
 import { Typography } from '@/components/typography';
 import { ShortcutButton } from './shortcut-button/shortcut-button';
 import { RenderKeys } from '../../../components/render-keys';
@@ -24,8 +23,7 @@ export const Shortcuts = ({}: ShortcutsProps) => {
                 <Page.Header>
                     <Typography.MainTitle>Shortcuts</Typography.MainTitle>
                     <Typography.Paragraph className="text-zinc-400">
-                        Set up Murmure's keyboard shortcuts to improve your
-                        workflow.
+                        Improve your workflow by setting up keyboard shortcuts.
                     </Typography.Paragraph>
                 </Page.Header>
 
@@ -39,6 +37,7 @@ export const Shortcuts = ({}: ShortcutsProps) => {
                             </Typography.Paragraph>
                         </SettingsUI.Description>
                         <ShortcutButton
+                            keyName="Push to talk"
                             shortcut={recordShortcut}
                             saveShortcut={setRecordShortcut}
                             resetShortcut={resetRecordShortcut}
@@ -51,13 +50,17 @@ export const Shortcuts = ({}: ShortcutsProps) => {
                                 Past last transcript
                             </Typography.Title>
                             <Typography.Paragraph>
-                                Press <Kbd>{lastTranscriptShortcut}</Kbd> to
-                                paste the last transcript. Useful when you
+                                Press{' '}
+                                <RenderKeys
+                                    keyString={lastTranscriptShortcut}
+                                />{' '}
+                                to paste the last transcript. Useful when you
                                 forgot to select an input field when you started
                                 recording.
                             </Typography.Paragraph>
                         </SettingsUI.Description>
                         <ShortcutButton
+                            keyName="Past last transcript"
                             shortcut={lastTranscriptShortcut}
                             saveShortcut={setLastTranscriptShortcut}
                             resetShortcut={resetLastTranscriptShortcut}

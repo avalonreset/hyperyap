@@ -1,7 +1,7 @@
 use crate::audio::write_transcription;
 use crate::audio::{record_audio, stop_recording};
 use crate::history::get_last_transcription;
-use crate::shortcuts::{keys_to_string, LastTranscriptShortcutKeys, RecordShortcutKeys};
+use crate::shortcuts::{keys_to_string, LastTranscriptShortcutKeys, RecordShortcutKeys, TranscriptionSuspended};
 use std::time::Duration;
 use tauri::{AppHandle, Emitter, Manager};
 
@@ -19,6 +19,11 @@ pub fn init_shortcuts(app: AppHandle) {
         let mut last_transcript_pressed = false;
 
         loop {
+            if app_handle.state::<TranscriptionSuspended>().get() {
+                std::thread::sleep(Duration::from_millis(32));
+                continue;
+            }
+
             let record_required_keys = app_handle.state::<RecordShortcutKeys>().get();
             let last_transcript_required_keys =
                 app_handle.state::<LastTranscriptShortcutKeys>().get();

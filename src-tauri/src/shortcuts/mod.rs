@@ -1,4 +1,4 @@
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex, atomic::{AtomicBool, Ordering}};
 
 pub struct RecordShortcutKeys(pub Arc<Mutex<Vec<i32>>>);
 
@@ -163,3 +163,17 @@ mod windows;
 pub use linux::init_shortcuts;
 #[cfg(target_os = "windows")]
 pub use windows::init_shortcuts;
+
+pub struct TranscriptionSuspended(pub Arc<AtomicBool>);
+
+impl TranscriptionSuspended {
+    pub fn new(suspended: bool) -> Self {
+        Self(Arc::new(AtomicBool::new(suspended)))
+    }
+    pub fn get(&self) -> bool {
+        self.0.load(Ordering::SeqCst)
+    }
+    pub fn set(&self, value: bool) {
+        self.0.store(value, Ordering::SeqCst)
+    }
+}

@@ -49,10 +49,9 @@ export const CustomDictionary = () => {
             <Page.Header>
                 <Typography.MainTitle>Custom Dictionary</Typography.MainTitle>
                 <Typography.Paragraph className="text-zinc-400">
-                    Add technical terms, names, or specialized vocabulary to
-                    improve transcription accuracy. Murmure uses the
-                    Beider-Morse phonetic algorithm optimized for English and
-                    French.
+                    Personalize your Murmure experience by adding technical
+                    terms, names, or specialized vocabulary to the dictionary
+                    (optimized for both English and French).
                 </Typography.Paragraph>
             </Page.Header>
 

@@ -22,7 +22,10 @@ export const Typography = {
         ...props
     }: React.HTMLAttributes<HTMLHeadingElement>) => {
         return (
-            <h2 className={clsx('font-medium', className)} {...props}>
+            <h2
+                className={clsx('font-medium text-white', className)}
+                {...props}
+            >
                 {children}
             </h2>
         );
