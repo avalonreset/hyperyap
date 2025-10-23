@@ -11,14 +11,26 @@ A privacy-first, open-source speech-to-text application that runs entirely on yo
 - **Open Source**: Free and open source software. Inspect, modify, and contribute.
 - **Powered by Parakeet**: NVIDIA’s state-of-the-art speech recognition model runs entirely on-device for fast, low-latency transcription.
 
+## Supported Languages:
+
+Bulgarian (bg), Croatian (hr), Czech (cs), Danish (da), Dutch (nl), English (en), Estonian (et), Finnish (fi), French (fr), German (de), Greek (el), Hungarian (hu), Italian (it), Latvian (lv), Lithuanian (lt), Maltese (mt), Polish (pl), Portuguese (pt), Romanian (ro), Slovak (sk), Slovenian (sl), Spanish (es), Swedish (sv), Russian (ru), Ukrainian (uk)
+
 ## Installation
 
-Download the latest [release](https://github.com/Kieirra/murmure/releases) and follow the installation wizard.
+### Windows
 
-Note:
+The Windows build is self-signed, as I'm not paying certification authorities just to remove the SmartScreen warning. Because of that, Windows may show a security message when you install it. The installer is safe, it will simply build its reputation over time as more users run it, and the warning will gradually disappear.
 
-- The Windows build is self-signed, as I'm not paying certification authorities just to remove the SmartScreen warning. Because of that, Windows may show a security message when you install it. The installer is safe, it will simply build its reputation over time as more users run it, and the warning will gradually disappear.
-- The experimental Linux AppImage currently runs slower during transcription. Performance improvements are in progress, stay tuned for updates!
+1. Download murmure_1.2.1_x64_en-US.msi from the [release](https://github.com/Kieirra/murmure/releases) page
+2. Run the installer and follow the setup wizard.
+
+### Linux
+
+The experimental AppImage currently runs slower for transcription, and the update checker isn’t functional yet. A faster, improved version will be released in the coming days.
+
+1. Download murmure-x86_64.AppImage from [release](https://github.com/Kieirra/murmure/releases) page
+2. Make it executable: `chmod +x murmure-x86_64.AppImage`
+3. Run the AppImage.
 
 ## Usage
 
@@ -60,7 +72,8 @@ You can inspect, modify, and redistribute it freely as long as derivative works 
 Contributions are welcome!
 If you’d like to improve Murmure or report an issue:
 
-Pre-requisite : 
+Pre-requisite :
+
 - (windows) Install Visual Studio Build Tools 2022 (Desktop C++ workload)
 - (linux) Install Vulkan
 - Install git lfs
