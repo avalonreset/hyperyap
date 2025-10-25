@@ -3,10 +3,13 @@ use crate::history::{self, HistoryEntry};
 use crate::model::Model;
 use crate::settings;
 use crate::shortcuts::{
-    keys_to_string, parse_binding_keys, LastTranscriptShortcutKeys, RecordShortcutKeys, TranscriptionSuspended,
+    keys_to_string, parse_binding_keys, LastTranscriptShortcutKeys, RecordShortcutKeys,
+    TranscriptionSuspended,
 };
 use std::sync::Arc;
 use tauri::{AppHandle, Manager, State};
+use tauri_plugin_dialog::{DialogExt, MessageDialogKind};
+use crate::http_api_state::HttpApiState;
 
 #[tauri::command]
 pub fn is_model_available(model: State<Arc<Model>>) -> bool {
@@ -144,4 +147,97 @@ pub fn set_overlay_position(app: AppHandle, position: String) -> Result<(), Stri
     let res = settings::save_settings(&app, &s);
     crate::overlay::update_overlay_position(&app);
     res
+}
+
+#[tauri::command]
+pub fn get_api_enabled(app: AppHandle) -> Result<bool, String> {
+    let s = settings::load_settings(&app);
+    Ok(s.api_enabled)
+}
+
+#[tauri::command]
+pub fn set_api_enabled(app: AppHandle, enabled: bool) -> Result<(), String> {
+    let mut s = settings::load_settings(&app);
+    s.api_enabled = enabled;
+    settings::save_settings(&app, &s)
+}
+
+#[tauri::command]
+pub fn get_api_port(app: AppHandle) -> Result<u16, String> {
+    let s = settings::load_settings(&app);
+    Ok(s.api_port)
+}
+
+#[tauri::command]
+pub fn set_api_port(app: AppHandle, port: u16) -> Result<(), String> {
+    if port < 1024 {
+        return Err("Port must be >= 1024".to_string());
+    }
+    let mut s = settings::load_settings(&app);
+    s.api_port = port;
+    settings::save_settings(&app, &s)
+}
+
+#[tauri::command]
+pub fn start_http_api_server(app: AppHandle) -> Result<String, String> {
+    let s = settings::load_settings(&app);
+    let port = s.api_port;
+    let app_handle = app.clone();
+    let state = app.state::<HttpApiState>().inner().clone();
+
+    std::thread::spawn(move || {
+        let rt = tokio::runtime::Runtime::new();
+        match rt {
+            Ok(runtime) => {
+                if let Err(e) = runtime.block_on(crate::http_api::start_http_api(app_handle.clone(), port, state.clone()))
+                {
+                    let error_msg = e.to_string();
+                    eprintln!("HTTP API error: {}", error_msg);
+
+                    let is_port_conflict = error_msg.to_lowercase().contains("address already in use")
+                        || error_msg.contains("address in use")
+                        || error_msg.contains("10048")
+                        || error_msg.to_lowercase().contains("adresse de socket");
+
+                    if is_port_conflict {
+                        let msg = format!(
+                            "Failed to start HTTP API on port {}.\n\nThe port is already in use by another application.\n\nPlease change the port in Settings → System → API Port to an available port (1024-65535).",
+                            port
+                        );
+                        let _ = app_handle.dialog()
+                            .message(&msg)
+                            .title("HTTP API Error")
+                            .kind(MessageDialogKind::Error)
+                            .blocking_show();
+                    } else {
+                        let msg = format!("Failed to start HTTP API: {}", error_msg);
+                        let _ = app_handle.dialog()
+                            .message(&msg)
+                            .title("HTTP API Error")
+                            .kind(MessageDialogKind::Error)
+                            .blocking_show();
+                    }
+                }
+            }
+            Err(e) => {
+                eprintln!("Failed to create async runtime for HTTP API: {}", e);
+                let msg = format!("Failed to create async runtime for HTTP API: {}", e);
+                let _ = app_handle.dialog()
+                    .message(&msg)
+                    .title("HTTP API Error")
+                    .kind(MessageDialogKind::Error)
+                    .blocking_show();
+            }
+        }
+    });
+
+    Ok(format!("HTTP API server starting on port {}", s.api_port))
+}
+
+#[tauri::command]
+pub fn stop_http_api_server(app: AppHandle) -> Result<(), String> {
+    let state = app.state::<HttpApiState>();
+    state.stop();
+    eprintln!("HTTP API server stop signal sent");
+    Ok(())
 }
