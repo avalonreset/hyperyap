@@ -26,7 +26,7 @@ pub struct ErrorResponse {
 pub async fn start_http_api(
     app: tauri::AppHandle,
     port: u16,
-    api_state: crate::http_api_state::HttpApiState,
+    api_state: super::state::HttpApiState,
 ) -> Result<()> {
     let app = Arc::new(app);
 
@@ -61,12 +61,10 @@ async fn transcribe_handler(
     axum::extract::State(app): axum::extract::State<Arc<tauri::AppHandle>>,
     mut multipart: Multipart,
 ) -> impl IntoResponse {
-    // Extract the audio file from multipart
     loop {
         match multipart.next_field().await {
             Ok(Some(field)) => {
                 if field.name() == Some("audio") {
-                    // Read file to temporary location
                     let bytes = match field.bytes().await {
                         Ok(b) => b,
                         Err(e) => {
@@ -80,7 +78,6 @@ async fn transcribe_handler(
                         }
                     };
 
-                    // Write to temporary WAV file
                     let temp_path =
                         std::env::temp_dir().join(format!("murmure-{}.wav", uuid::Uuid::new_v4()));
 
@@ -94,11 +91,9 @@ async fn transcribe_handler(
                             .into_response();
                     }
 
-                    // Perform transcription
                     let result = match audio::preload_engine(&app) {
                         Ok(_) => match audio::transcribe_audio(&temp_path) {
                             Ok(raw_text) => {
-                                // Fix transcription with dictionary
                                 let text = match get_cc_rules_path(&app) {
                                     Ok(cc_rules_path) => {
                                         let dictionary = app.state::<Dictionary>().get();
@@ -108,7 +103,7 @@ async fn transcribe_handler(
                                             cc_rules_path,
                                         )
                                     }
-                                    Err(_) => raw_text, // Use raw text if rules not available
+                                    Err(_) => raw_text,
                                 };
 
                                 Ok(text)
@@ -118,7 +113,6 @@ async fn transcribe_handler(
                         Err(e) => Err(format!("Model not available: {}", e)),
                     };
 
-                    // Clean up temporary file
                     let _ = std::fs::remove_file(&temp_path);
 
                     return match result {
@@ -154,3 +148,5 @@ async fn transcribe_handler(
     )
         .into_response()
 }
+
+

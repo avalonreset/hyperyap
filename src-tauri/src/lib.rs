@@ -5,7 +5,6 @@ mod dictionary;
 mod engine;
 mod history;
 mod http_api;
-mod http_api_state;
 mod model;
 mod overlay;
 mod settings;
@@ -15,12 +14,11 @@ mod tray_icon;
 use audio::preload_engine;
 use commands::*;
 use dictionary::Dictionary;
-use http_api_state::HttpApiState;
+use http_api::HttpApiState;
 use model::Model;
 use shortcuts::init_shortcuts;
 use std::sync::Arc;
 use tauri::{DeviceEventFilter, Manager};
-use tauri_plugin_dialog::DialogExt;
 use tray_icon::setup_tray;
 
 use crate::shortcuts::{LastTranscriptShortcutKeys, RecordShortcutKeys, TranscriptionSuspended};
@@ -85,54 +83,8 @@ pub fn run() {
 
             if s.api_enabled {
                 let app_handle = app.handle().clone();
-                std::thread::spawn(move || {
-                    let rt = tokio::runtime::Runtime::new();
-                    match rt {
-                        Ok(runtime) => {
-                            if let Err(e) = runtime.block_on(crate::http_api::start_http_api(
-                                app_handle.clone(),
-                                s.api_port,
-                                app_handle.state::<HttpApiState>().inner().clone(),
-                            )) {
-                                let error_msg = e.to_string();
-                                eprintln!("Failed to start HTTP API at startup: {}", error_msg);
-
-                                let is_port_conflict = error_msg.to_lowercase().contains("address already in use")
-                                    || error_msg.contains("address in use")
-                                    || error_msg.contains("10048")
-                                    || error_msg.to_lowercase().contains("adresse de socket");
-
-                                if is_port_conflict {
-                                    let msg = format!(
-                                        "Failed to start HTTP API on port {}.\n\nThe port is already in use by another application.\n\nPlease change the port in Settings → System → API Port to an available port (1024-65535).",
-                                        s.api_port
-                                    );
-                                    let _ = app_handle.dialog()
-                                        .message(&msg)
-                                        .title("HTTP API Error")
-                                        .kind(tauri_plugin_dialog::MessageDialogKind::Error)
-                                        .blocking_show();
-                                } else {
-                                    let msg = format!("Failed to start HTTP API: {}", error_msg);
-                                    let _ = app_handle.dialog()
-                                        .message(&msg)
-                                        .title("HTTP API Error")
-                                        .kind(tauri_plugin_dialog::MessageDialogKind::Error)
-                                        .blocking_show();
-                                }
-                            }
-                        }
-                        Err(e) => {
-                            eprintln!("Failed to create async runtime for HTTP API at startup: {}", e);
-                            let msg = format!("Failed to create async runtime for HTTP API: {}", e);
-                            let _ = app_handle.dialog()
-                                .message(&msg)
-                                .title("HTTP API Error")
-                                .kind(tauri_plugin_dialog::MessageDialogKind::Error)
-                                .blocking_show();
-                        }
-                    }
-                });
+                let state = app_handle.state::<HttpApiState>().inner().clone();
+                crate::http_api::spawn_http_api_thread(app_handle, s.api_port, state);
             }
 
             Ok(())
