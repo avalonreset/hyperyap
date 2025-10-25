@@ -51,12 +51,13 @@ Murmure uses NVIDIA’s Parakeet TDT, a highly optimized, experimental transform
 
 ## Changelog
 
-| Version       | Date       | Notes                                                                                      |
-| ------------- | ---------- | ------------------------------------------------------------------------------------------ |
-| `1.2.1`       | 2025-10-17 | Fix overlay position + check for updates button + signed msi + Linux experimental AppImage |
-| `1.2.0-alpha` | 2025-10-14 | Add Overlay                                                                                |
-| `1.1.0-alpha` | 2025-10-13 | Add 'Past last transcript' shortcut                                                        |
-| `1.0.0-alpha` | 2025-10-13 | Initial version                                                                            |
+| Version       | Date       | Notes                                                                                                                                                                                                                                                                    |
+| ------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `1.3.0`       | 2025-10-25 | **New Experimental HTTP API**: Connect Murmure to any software via a local API. **Linux fixes**: Overlay and update checker now work identically to Windows. **Bug fixes**: Memory leak resolved, 'v' letter bug in shortcut assignment fixed. **Minor UI improvements** |
+| `1.2.1`       | 2025-10-17 | Fix overlay position + check for updates button + signed msi + Linux experimental AppImage                                                                                                                                                                               |
+| `1.2.0-alpha` | 2025-10-14 | Add Overlay                                                                                                                                                                                                                                                              |
+| `1.1.0-alpha` | 2025-10-13 | Add 'Past last transcript' shortcut                                                                                                                                                                                                                                      |
+| `1.0.0-alpha` | 2025-10-13 | Initial version                                                                                                                                                                                                                                                          |
 
 ## Acknowledgments
 
