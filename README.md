@@ -21,14 +21,14 @@ Bulgarian (bg), Croatian (hr), Czech (cs), Danish (da), Dutch (nl), English (en)
 
 The Windows build is self-signed, as I'm not paying certification authorities just to remove the SmartScreen warning. Because of that, Windows may show a security message when you install it. The installer is safe, it will simply build its reputation over time as more users run it, and the warning will gradually disappear.
 
-1. Download murmure_1.2.1_x64_en-US.msi from the [release](https://github.com/Kieirra/murmure/releases) page
+1. Download murmure_{version}_x64_en-US.msi from the [release](https://github.com/Kieirra/murmure/releases) page
 2. Run the installer and follow the setup wizard.
 
 ### Linux
 
 The experimental AppImage currently runs slower for transcription, and the update checker isn’t functional yet. A faster, improved version will be released in the coming days.
 
-1. Download murmure-x86_64.AppImage from [release](https://github.com/Kieirra/murmure/releases) page
+1. Download murmure_{version}_amd64.AppImage from [release](https://github.com/Kieirra/murmure/releases) page
 2. Make it executable: `chmod +x murmure-x86_64.AppImage`
 3. Run the AppImage.
 
