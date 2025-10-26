@@ -26,8 +26,6 @@ The Windows build is self-signed, as I'm not paying certification authorities ju
 
 ### Linux
 
-The experimental AppImage currently runs slower for transcription, and the update checker isn’t functional yet. A faster, improved version will be released in the coming days.
-
 1. Download murmure_{version}_amd64.AppImage from [release](https://github.com/Kieirra/murmure/releases) page
 2. Make it executable: `chmod +x murmure-x86_64.AppImage`
 3. Run the AppImage.
