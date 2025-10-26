@@ -56,6 +56,26 @@ Murmure uses NVIDIA’s Parakeet TDT, a highly optimized, experimental transform
 | `1.2.0-alpha` | 2025-10-14 | Add Overlay                                                                                                                                                                                                                                                              |
 | `1.1.0-alpha` | 2025-10-13 | Add 'Past last transcript' shortcut                                                                                                                                                                                                                                      |
 | `1.0.0-alpha` | 2025-10-13 | Initial version                                                                                                                                                                                                                                                          |
+## 🗺️ Roadmap 
+
+- [ ] Create an onboarding website for non technical user (in progress)  
+- [ ] Fix bug: the visualizer does not always reset at the end of a transcription  
+- [ ] Add a button to clear transcription history  
+- [ ] Display the overlay on the active screen  
+- [ ] Scale overlay based on screen DPI or add a zoom option  
+- [ ] Allow selecting the input microphone 
+- [ ] Add keyboard shortcuts to start and stop recording (outside push-to-talk mode)  
+- [ ] Improve the custom dictionary algorithm  
+- [ ] API: Create an API to fetch the latest transcription  
+- [ ] API(Webhook): Send an HTTP request after `CTRL + SPACE`, opens up many interesting possibilities  
+- [ ] Allow uploading an audio file and outputting a `.txt` transcript  
+- [ ] Support MP3 files in addition to WAV (since some recorders use MP3)  
+- [ ] Add benchmarking vs Whisper and Plaud: identify where the model performs best (microphone speech, conference, meeting) and test potential optimizations  
+- [ ] **Major:** Add real-time streaming  
+- [ ] **Major:** Integrate an LLM to enhance or modify transcriptions  
+- [ ] **Major:** Implement a plugin system  
+
+
 
 ## Acknowledgments
 
