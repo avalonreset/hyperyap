@@ -26,7 +26,7 @@ The API will remain running as long as Murmure is open. It will stop when you cl
 Send a multipart form with an audio file field named `audio` containing a `.wav` file:
 
 ```bash
-curl -X POST http://127.0.0.1:4800/api/transcribe -F "audio=@/home/kieirra/git-project/murmure/tests/voices/test_fr.wav;type=audio/wav"
+curl -X POST http://127.0.0.1:4800/api/transcribe -F "audio=@/audio.wav;type=audio/wav"
 ```
 
 ### Response
