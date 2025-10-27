@@ -60,7 +60,8 @@ Murmure uses NVIDIA’s Parakeet TDT, a highly optimized, experimental transform
 
 - [ ] Create an onboarding website for non technical user (in progress)  
 - [ ] Fix bug: the visualizer does not always reset at the end of a transcription  
-- [ ] Add a button to clear transcription history  
+- [ ] Add a button to clear transcription history
+- [ ] Click on history, save it in clipboard  
 - [ ] Display the overlay on the active screen  
 - [ ] Scale overlay based on screen DPI or add a zoom option  
 - [ ] Allow selecting the input microphone 
@@ -71,7 +72,7 @@ Murmure uses NVIDIA’s Parakeet TDT, a highly optimized, experimental transform
 - [ ] Allow uploading an audio file and outputting a `.txt` transcript  
 - [ ] Support MP3 files in addition to WAV (since some recorders use MP3)  
 - [ ] Add benchmarking vs Whisper and Plaud: identify where the model performs best (microphone speech, conference, meeting) and test potential optimizations  
-- [ ] **Major:** Add real-time streaming  
+- [ ] **Major:** Add real-time streaming (POC) 
 - [ ] **Major:** Integrate an LLM to enhance or modify transcriptions  
 - [ ] **Major:** Implement a plugin system  
 
