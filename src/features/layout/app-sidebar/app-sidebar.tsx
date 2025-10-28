@@ -6,6 +6,7 @@ import {
     Keyboard,
     BookText,
     Power,
+    Bug,
 } from 'lucide-react';
 import { Link } from '@tanstack/react-router';
 import { useState } from 'react';
@@ -25,6 +26,7 @@ import {
 import { useLocation } from '@tanstack/react-router';
 import { useGetVersion } from '../hooks/use-get-version';
 import { UpdateChecker } from '../../update-checker/update-checker';
+import { Separator } from '@/components/separator';
 
 const settingsSubItems = [
     { name: 'Shortcuts', url: '/settings/shortcuts', icon: Keyboard },
@@ -107,7 +109,17 @@ export const AppSidebar = () => {
                     </SidebarMenu>
                 </SidebarGroup>
             </SidebarContent>
-            <SidebarFooter className="bg-zinc-900 border-t border-zinc-700 p-4">
+            <SidebarFooter className="bg-zinc-900 ">
+                <a
+                    href="https://github.com/Kieirra/murmure/issues/new"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-zinc-500 text-xs hover:text-zinc-300 transition-colors flex items-center gap-2 justify-center"
+                >
+                    <Bug className="w-4 h-4" />
+                    <span>Report a bug</span>
+                </a>
+                <Separator/>
                 <div className="flex items-center gap-2 justify-center">
                     <UpdateChecker />
                     <p className="text-xs text-zinc-500">{version}</p>
