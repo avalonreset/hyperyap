@@ -20,8 +20,14 @@ export const CustomDictionary = () => {
     const persist = (next: string[]) => {
         setCustomWords(next);
         invoke('set_dictionary', { dictionary: next })
-            .then(() => toast.success('Dictionary updated'))
-            .catch(() => toast.error('Failed to update dictionary'));
+            .then(() => toast.success('Dictionary updated', {
+                duration: 1500,
+                closeButton: true,
+            }))
+            .catch(() => toast.error('Failed to update dictionary', {
+                duration: 2000,
+                closeButton: true,
+            }));
     };
 
     const handleAddWord = () => {

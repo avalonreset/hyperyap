@@ -1,7 +1,7 @@
 import { Outlet } from '@tanstack/react-router';
 import { SidebarProvider, SidebarInset } from '../../components/sidebar';
 import { AppSidebar } from './app-sidebar/app-sidebar';
-import { Toaster } from 'sonner';
+import { Toaster } from '@/components/sonner';
 
 export const Layout = () => {
     return (

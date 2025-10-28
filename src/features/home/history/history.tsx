@@ -1,4 +1,5 @@
 import { Typography } from '@/components/typography';
+import { toast } from 'sonner';
 import { formatTime } from './history.helpers';
 import { useHistoryState } from './hooks/use-history-state';
 
@@ -25,7 +26,22 @@ export const History = ({}: HistoryProps) => {
                     {history.map((entry) => (
                         <div
                             key={entry.id}
-                            className="rounded-md border border-zinc-700 p-3"
+                            className="rounded-md border border-zinc-700 p-3 hover:bg-zinc-800 cursor-pointer"
+                            onClick={async () => {
+                                if (!entry.text) return;
+                                try {
+                                    await navigator.clipboard.writeText(entry.text);
+                                    toast.success('Copied to clipboard', {
+                                        duration: 1500,
+                                        closeButton: true,
+                                    });
+                                } catch {
+                                    toast.error('Failed to copy', {
+                                        duration: 2000,
+                                        closeButton: true,
+                                    });
+                                }
+                            }}
                         >
                             <div className="flex items-start justify-between gap-3">
                                 <Typography.Paragraph>
