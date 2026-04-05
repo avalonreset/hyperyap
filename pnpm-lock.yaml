@@ -131,8 +131,8 @@ importers:
         specifier: ^16.5.4
         version: 16.5.4(i18next@25.8.0(typescript@5.9.3))(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(typescript@5.9.3)
       react-number-format:
-        specifier: ^5.4.4
-        version: 5.4.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+        specifier: ^5.4.5
+        version: 5.4.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       react-simple-code-editor:
         specifier: ^0.14.1
         version: 0.14.1(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -4522,8 +4522,8 @@ packages:
       react:
         optional: true
 
-  react-number-format@5.4.4:
-    resolution: {integrity: sha512-wOmoNZoOpvMminhifQYiYSTCLUDOiUbBunrMrMjA+dV52sY+vck1S4UhR6PkgnoCquvvMSeJjErXZ4qSaWCliA==}
+  react-number-format@5.4.5:
+    resolution: {integrity: sha512-y8O2yHHj3w0aE9XO8d2BCcUOOdQTRSVq+WIuMlLVucAm5XNjJAy+BoOJiuQMldVYVOKTMyvVNfnbl2Oqp+YxGw==}
     peerDependencies:
       react: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^0.14 || ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
@@ -10575,7 +10575,7 @@ snapshots:
     optionalDependencies:
       react: 19.2.4
 
-  react-number-format@5.4.4(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+  react-number-format@5.4.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
     dependencies:
       react: 19.2.4
       react-dom: 19.2.4(react@19.2.4)
