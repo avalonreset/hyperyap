@@ -20,8 +20,50 @@ privacy boundary:
 - Hosting target: Railway
 - Website source path: `website/`
 - Website branch: `codex/hyperyap-com`
+- GitHub repository: `avalonreset/hyperyap`
+- Railway project: `hyperyap-com`
+- Railway project ID: `b377377b-002c-4537-af5f-f3f3024b4110`
+- Railway environment: `production`
+- Railway environment ID: `02bcbd37-47b5-4495-9e43-9fcd2bc26f05`
+- Railway service: `hyperyap-site`
+- Railway service ID: `585ad33d-03b6-49bc-993e-e51d89d3e31e`
+- Railway service domain: `https://hyperyap-site-production.up.railway.app/`
+- Railway deployment trigger: `avalonreset/hyperyap`, branch `codex/hyperyap-com`
 - Cloudflare zone: `hyperyap.com`
+- Cloudflare zone ID: `e6c37dee7e277e6be62833f3c5cd2480`
 - Cloudflare nameservers assigned: `hazel.ns.cloudflare.com`, `kaiser.ns.cloudflare.com`
+- Current Cloudflare zone status: `pending` until Namecheap delegates to Cloudflare
+
+## Current Blocker
+
+Namecheap API calls are blocked by the account's API client-IP whitelist. The
+DNS records already exist in Cloudflare, but the registrar still uses Namecheap
+default nameservers:
+
+- `dns1.registrar-servers.com`
+- `dns2.registrar-servers.com`
+
+To finish delegation, update the Namecheap API whitelist for the current
+outgoing IP and rerun `namecheap.domains.dns.setCustom`, or change the
+nameservers manually in the Namecheap dashboard to:
+
+- `hazel.ns.cloudflare.com`
+- `kaiser.ns.cloudflare.com`
+
+After that propagates, Cloudflare should activate the zone and Railway should
+verify the custom-domain TXT records.
+
+## Railway Domains
+
+Railway custom domains are configured for:
+
+| Domain | Traffic record | Verification host |
+| --- | --- | --- |
+| `hyperyap.com` | CNAME `hyperyap.com` -> `d9qs201m.up.railway.app` | TXT `_railway-verify.hyperyap.com` |
+| `www.hyperyap.com` | CNAME `www.hyperyap.com` -> `qvv1bgf7.up.railway.app` | TXT `_railway-verify.www.hyperyap.com` |
+
+Cloudflare records were created as DNS-only so Railway can validate ownership
+and serve HTTPS directly.
 
 ## Provider API Notes
 
