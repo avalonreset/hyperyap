@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HyperYap Local API</title>
+    <meta name="description" content="Use HyperYap's local HTTP API to transcribe WAV files on your own machine.">
+    <link rel="icon" href="/assets/app-icon.png">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/">
+          <img src="/assets/app-icon.png" alt="" width="32" height="32">
+          <span>HyperYap</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/privacy.html">Privacy</a>
+          <a href="/security.html">Security</a>
+          <a href="https://github.com/avalonreset/hyperyap">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-main">
+      <article class="content-page">
+        <p class="eyebrow">Experimental integration surface</p>
+        <h1>Local HTTP API</h1>
+        <p class="lede">
+          HyperYap can expose a localhost-only transcription endpoint while the
+          desktop app is open. It is intended for local tools that need a private
+          speech-to-text engine.
+        </p>
+
+        <section>
+          <h2>Enable it</h2>
+          <ol>
+            <li>Open HyperYap.</li>
+            <li>Go to Settings, then System.</li>
+            <li>Enable Local API.</li>
+            <li>Use the configured localhost port. The default is <code>4800</code>.</li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>Endpoint</h2>
+          <p><code>POST http://127.0.0.1:4800/api/transcribe</code></p>
+          <p>Send a multipart form field named <code>audio</code> containing a WAV file.</p>
+          <pre class="code-panel"><code>curl -X POST http://127.0.0.1:4800/api/transcribe \
+  -F "audio=@recording.wav;type=audio/wav"</code></pre>
+        </section>
+
+        <section>
+          <h2>Response</h2>
+          <pre class="code-panel"><code>{
+  "text": "Hello everyone, here is the complete transcript..."
+}</code></pre>
+          <p>Errors return a JSON object with an <code>error</code> message.</p>
+        </section>
+
+        <section>
+          <h2>Security model</h2>
+          <ul>
+            <li>The API listens on localhost.</li>
+            <li>CORS is not enabled.</li>
+            <li>Requests are processed sequentially through the local transcription engine.</li>
+            <li>Audio files must be WAV and no larger than the app limit.</li>
+          </ul>
+        </section>
+      </article>
+    </main>
+  </body>
+</html>

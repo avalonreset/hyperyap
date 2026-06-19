@@ -1,0 +1,16 @@
+# HyperYap
+
+HyperYap is an open-source desktop speech-to-text application focused on local processing and user privacy.
+
+Primary URLs:
+- Website: https://hyperyap.com/
+- Source: https://github.com/avalonreset/hyperyap
+- Releases: https://github.com/avalonreset/hyperyap/releases/latest
+- Privacy policy: https://github.com/avalonreset/hyperyap/blob/main/PRIVACY_POLICY.md
+
+Key facts:
+- Speech recognition runs locally on the user's machine by default.
+- The project does not include analytics or telemetry.
+- Transcription history is memory-only unless the user enables persisted history.
+- Persisted history is limited to the last five transcriptions.
+- The experimental HTTP API is localhost-only and does not enable CORS.

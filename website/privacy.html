@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HyperYap Privacy</title>
+    <meta name="description" content="HyperYap's privacy boundary: local processing, no analytics, and no uploaded recordings by default.">
+    <link rel="icon" href="/assets/app-icon.png">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="/">
+          <img src="/assets/app-icon.png" alt="" width="32" height="32">
+          <span>HyperYap</span>
+        </a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/api.html">Local API</a>
+          <a href="/security.html">Security</a>
+          <a href="https://github.com/avalonreset/hyperyap">GitHub</a>
+        </div>
+      </nav>
+    </header>
+
+    <main class="page-main">
+      <article class="content-page">
+        <p class="eyebrow">Privacy</p>
+        <h1>Local first by design.</h1>
+        <p class="lede">
+          HyperYap is built to work without sending recordings or transcripts to
+          a cloud transcription service by default.
+        </p>
+
+        <section>
+          <h2>What HyperYap does not do</h2>
+          <ul>
+            <li>It does not include analytics or telemetry.</li>
+            <li>It does not collect or sell user data.</li>
+            <li>It does not upload recordings or transcriptions by default.</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>Local data</h2>
+          <p>
+            HyperYap stores settings, custom dictionary words, formatting rules,
+            and optional LLM configuration on your device. API keys are handled
+            through the operating system keyring where supported.
+          </p>
+          <p>
+            Transcription history is memory-only unless you explicitly enable
+            persisted history. When enabled, only the last five transcriptions
+            are saved.
+          </p>
+        </section>
+
+        <section>
+          <h2>Network usage</h2>
+          <p>
+            The app may contact GitHub for update checks and downloads. Other
+            network behavior is opt-in, such as connecting to a local or remote
+            LLM endpoint you configure, or enabling the localhost HTTP API.
+          </p>
+        </section>
+
+        <p><a class="text-link" href="https://github.com/avalonreset/hyperyap/blob/main/PRIVACY_POLICY.md">Read the full project privacy policy</a></p>
+      </article>
+    </main>
+  </body>
+</html>
