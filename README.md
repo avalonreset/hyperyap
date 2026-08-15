@@ -1,15 +1,18 @@
 <p align="center">
-  <img src="assets/banner.webp" alt="HyperYap - local voice-to-text for your desktop" width="100%">
+  <img src="assets/banner.webp" alt="HYPER YAP - local voice to text" width="100%">
 </p>
 
-# HyperYap - Local Voice-to-Text for Your Desktop
+<p align="center">
+  <a href="https://github.com/avalonreset/hyperyap/actions/workflows/ci.yaml"><img src="https://github.com/avalonreset/hyperyap/actions/workflows/ci.yaml/badge.svg" alt="CI"></a>
+  <a href="https://github.com/avalonreset/hyperyap/releases"><img src="https://img.shields.io/github/v/release/avalonreset/hyperyap" alt="GitHub release"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/avalonreset/hyperyap" alt="License: AGPL-3.0"></a>
+</p>
 
-[![CI](https://github.com/avalonreset/hyperyap/actions/workflows/ci.yaml/badge.svg)](https://github.com/avalonreset/hyperyap/actions/workflows/ci.yaml)
-[![GitHub release](https://img.shields.io/github/v/release/avalonreset/hyperyap)](https://github.com/avalonreset/hyperyap/releases)
-[![License: AGPL-3.0](https://img.shields.io/github/license/avalonreset/hyperyap)](LICENSE)
-[![Last Commit](https://img.shields.io/github/last-commit/avalonreset/hyperyap)](https://github.com/avalonreset/hyperyap/commits/main)
+Speak. It types. Nothing leaves the machine.
 
-HyperYap is a privacy-first voice-to-text app that runs speech recognition locally on your machine. It uses NVIDIA Parakeet, collects no data, and gives you fast recording, automatic paste, configurable shortcuts, optional LLM cleanup, and terminal-friendly workflow helpers.
+HyperYap is local voice-to-text for Windows, macOS, and Linux. It runs NVIDIA Parakeet on your computer, pastes into the app you already have focused, and collects no data.
+
+The public installer is still a standalone app. On a Legends desk, the same engine can live as a module inside Legends Bridge so push-to-talk keeps working when Chrome is closed. Bridge is not required to use HyperYap.
 
 ## Table of Contents
 
